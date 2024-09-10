@@ -20,17 +20,17 @@
                     class="product" 
                     :class="{ selected : product.active }"
                 > <!--v-on:click = @click -->
-                
+
                     <div class="photo">
                         <img :src="product.photo"> <!-- Para representar algo dinamico colocar os dois pontos - variavel -> v-bind:src = :src -->
                     </div>
                     <div class="description">
                         <span class="name">{{product.name}}</span>
                         <span class="price">$ {{ product.price }}</span>
-                        <div class="quantity-area">
-                            <button>-</button>
+                        <div class="quantity-area" v-if="product.active">
+                            <button @click.stop="product.quantity -= 1" :disabled="product.quantity <= 0">-</button> <!-- Stop-propagation - Mão se propaga aos outros elementos -->
                             <span class="quantity">{{ product.quantity }}</span>
-                            <button>+</button>
+                            <button @click.stop="product.quantity += 1">+</button>
                         </div>
                     </div>
                 </div>
