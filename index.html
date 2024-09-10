@@ -15,9 +15,14 @@
         <main id="app">
             <section class="items">
                 <h4>Selecione os produtos:</h4>
-                <div v-for="product in products" class="product">
+                <div @click="product.active = !product.active" 
+                    v-for="product in products" 
+                    class="product" 
+                    :class="{ selected : product.active }"
+                > <!--v-on:click = @click -->
+                
                     <div class="photo">
-                        <img :src="product.photo"> <!-- Para representar algo dinamico colocar os dois pontos -->
+                        <img :src="product.photo"> <!-- Para representar algo dinamico colocar os dois pontos - variavel -> v-bind:src = :src -->
                     </div>
                     <div class="description">
                         <span class="name">{{product.name}}</span>
