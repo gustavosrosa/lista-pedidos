@@ -8,144 +8,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
-        <title>Self Service Order</title>
+        <title>PediFood</title>
     </head>
 
     <body>
-        
         <main id="app">
-            
             <section class="items">
-                <h4>Selecione os produtos</h4>
-                <div class="product selected">
+                <h4>Selecione os produtos:</h4>
+                <div @click="product.active = !product.active" 
+                    v-for="product in products" 
+                    class="product" 
+                    :class="{ selected : product.active }"
+                > <!--v-on:click = @click -->
+
                     <div class="photo">
-                        <img src="img/big-mac.png">
+                        <img :src="product.photo"> <!-- Para representar algo dinamico colocar os dois pontos - variavel -> v-bind:src = :src -->
                     </div>
                     <div class="description">
-                        <span class="name">Big Mac</span>
-                        <span class="price">$ 5.99</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/mc-chicken.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Mc Chicken</span>
-                        <span class="price">$ 4.99</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/double-cb.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Double Cheese Burger</span>
-                        <span class="price">$ 2.99</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/fries.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Batata frita</span>
-                        <span class="price">$ 2.99</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/nuggets.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Mc Nuggets</span>
-                        <span class="price">$ 3.49</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/salad.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Salad</span>
-                        <span class="price">$ 2.79</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/cola.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Coke</span>
-                        <span class="price">$ 1.99</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/lipton.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Ice Tea</span>
-                        <span class="price">$ 1.99</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="photo">
-                        <img src="img/water.png">
-                    </div>
-                    <div class="description">
-                        <span class="name">Water</span>
-                        <span class="price">$ 1.49</span>
-                        <div class="quantity-area">
-                            <button>-</button>
-                            <span class="quantity">1</span>
-                            <button>+</button>
+                        <span class="name">{{product.name}}</span>
+                        <span class="price">$ {{ product.price }}</span>
+                        <div class="quantity-area" v-if="product.active">
+                            <button @click.stop="product.quantity -= 1" :disabled="product.quantity <= 0">-</button> <!-- Stop-propagation - Mão se propaga aos outros elementos -->
+                            <span class="quantity">{{ product.quantity }}</span>
+                            <button @click.stop="product.quantity += 1">+</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="summary">
+            <section class="summary" v-if="total() > 0">
                 <strong>Resumo do pedido</strong>
                 <table>
                     <thead>
@@ -155,14 +46,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1x Big Mac</td>
-                            <td>5.99</td>
+                        <tr v-for="product in products">
+                            <template v-if="product.active && product.quantity > 0"> <!-- Nao aparece no inspect -->
+                                <td>{{ product.quantity + 'x ' + product.name }}</td>
+                                <td>{{ (product.quantity * product.price).toFixed(2) }}</td>
+                            </template>
                         </tr>
                         
                         <tr>
                             <th>Total</th>
-                            <th>5.99</th>
+                            <th>{{ total() }}</th>
                         </tr>
                     </tbody>
                 </table>
@@ -170,7 +63,12 @@
 
         </main>
 
+        <!-- Adicionar o script do Vue -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
         <script src="scripts.js"></script>
+
+       
     </body>
 
 </html>
