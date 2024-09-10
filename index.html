@@ -17,31 +17,135 @@
             
             <section class="items">
                 <h4>Selecione os produtos</h4>
-                <div v-for="product in products" 
-                    class="product"
-                    @click="toggleActive(product)"
-                    :class="{selected: product.active}"
-                    >
-                    
+                <div class="product selected">
                     <div class="photo">
-                        <img :src="product.photo">
+                        <img src="img/big-mac.png">
                     </div>
                     <div class="description">
-                        <span class="name">{{product.name}}</span>
-                        <span class="price">$ {{product.price}}</span>
+                        <span class="name">Big Mac</span>
+                        <span class="price">$ 5.99</span>
                         <div class="quantity-area">
-                            <template v-if="product.active">
-                                <button :disabled="product.quantity<=1" @click.stop="product.quantity--">-</button> 
-                                <span class="quantity">{{product.quantity}}</span> 
-                                <button @click.stop="product.quantity++">+</button>
-                            </template>
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
                         </div>
                     </div>
                 </div>
-
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/mc-chicken.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Mc Chicken</span>
+                        <span class="price">$ 4.99</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/double-cb.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Double Cheese Burger</span>
+                        <span class="price">$ 2.99</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/fries.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Batata frita</span>
+                        <span class="price">$ 2.99</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/nuggets.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Mc Nuggets</span>
+                        <span class="price">$ 3.49</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/salad.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Salad</span>
+                        <span class="price">$ 2.79</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/cola.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Coke</span>
+                        <span class="price">$ 1.99</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/lipton.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Ice Tea</span>
+                        <span class="price">$ 1.99</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product">
+                    <div class="photo">
+                        <img src="img/water.png">
+                    </div>
+                    <div class="description">
+                        <span class="name">Water</span>
+                        <span class="price">$ 1.49</span>
+                        <div class="quantity-area">
+                            <button>-</button>
+                            <span class="quantity">1</span>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <section class="summary" v-if="total()>0">
+            <section class="summary">
                 <strong>Resumo do pedido</strong>
                 <table>
                     <thead>
@@ -51,16 +155,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="product in products">
-                            <template v-if="product.active">
-                                <td>{{product.quantity + 'x ' + product.name}}</td>
-                                <td>{{(product.quantity * product.price).toFixed(2)}}</td>
-                            </template>
+                        <tr>
+                            <td>1x Big Mac</td>
+                            <td>5.99</td>
                         </tr>
                         
                         <tr>
                             <th>Total</th>
-                            <th>{{total()}}</th>
+                            <th>5.99</th>
                         </tr>
                     </tbody>
                 </table>
@@ -68,7 +170,6 @@
 
         </main>
 
-        <script src="https://unpkg.com/vue@3"></script>
         <script src="scripts.js"></script>
     </body>
 
