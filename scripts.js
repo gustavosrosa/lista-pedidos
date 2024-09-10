@@ -63,4 +63,18 @@ var products = [
         "quantity": 1
     }
 ];
+
+// Objeto que armazena a logica da aplicacao
+const SelfServiceMachine = {
+
+    // Guarda os dados a serem utilizados
+    // Tudo que colocar aqui vai ter acesso a nossa aplicacao
+    data() {
+        return {
+            products: window.products
+        }
+
+    }
+}
  
+Vue.createApp(SelfServiceMachine).mount("#app");
